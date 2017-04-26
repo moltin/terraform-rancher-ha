@@ -1,0 +1,20 @@
+#cloud-config
+write_files:
+- content: |
+    #!/bin/bash
+    wait-for-docker
+    docker run -d --restart=unless-stopped \
+      --name=rancher-ha-server \
+      --log-driver=gelf \
+      --log-opt gelf-address=udp://${gelf_address}:${gelf_port} \
+      -p 8080:8080 -p 9345:9345 \
+      rancher/server:${rancher_version} \
+      --db-host ${db_host} \
+      --db-name ${db_name} \
+      --db-port ${db_port} \
+      --db-user ${db_user} \
+      --db-pass ${db_pass} \
+      --advertise-address $(ip route get 8.8.8.8 | awk '{print $NF;exit}')
+  path: /etc/rc.local
+  permissions: "0500"
+  owner: root
