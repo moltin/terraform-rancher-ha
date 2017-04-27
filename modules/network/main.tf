@@ -52,7 +52,7 @@ variable "private_subnet_cidrs" {
 }
 
 module "network" {
-    source = "git::git@github.com:moltin/terraform-stack.git//aws/network?ref=0.1.0"
+    source = "git::git@github.com:moltin/terraform-stack.git//aws/network?ref=0.1.2"
 
     name                 = "${var.name}"
     vpc_cidr             = "${var.vpc_cidr}"

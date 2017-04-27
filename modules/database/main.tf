@@ -51,15 +51,15 @@ variable "db_pass" {
 }
 
 module "rds_cluster" {
-    source = "git::git@github.com:moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.0"
+    source = "git::git@github.com:moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.2"
 
     name                          = "${var.name}"
     vpc_id                        = "${data.terraform_remote_state.network.vpc_id}"
+    subnet_ids                    = "${data.terraform_remote_state.network.private_subnet_ids}"
     environment                   = "${var.environment}"
     database_name                 = "${var.db_name}"
     master_username               = "${var.db_user}"
     master_password               = "${var.db_pass}"
-    public_subnet_ids             = "${data.terraform_remote_state.network.public_subnet_ids}"
     ingress_allow_security_groups = ["${module.sg_rancher.id}"]
 }
 
