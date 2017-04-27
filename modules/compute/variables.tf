@@ -67,14 +67,6 @@ variable "rancher_version" {
     description = "The version of Rancher to be install"
 }
 
-variable "gelf_port" {
-    description = "The GELF server port to sent Docker logs"
-}
-
-variable "gelf_address" {
-    description = "The GELF server address to sent Docker logs"
-}
-
 variable "domain" {
     description = "The domain of the certificate to look up"
 }

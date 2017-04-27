@@ -44,9 +44,6 @@ data "template_file" "cloud-config" {
         db_host = "${data.terraform_remote_state.database.rds_cluster_endpoint}"
         db_port = "${data.terraform_remote_state.database.rds_cluster_port}"
 
-        gelf_port    = "${var.gelf_port}"
-        gelf_address = "${var.gelf_address}"
-
         rancher_version = "${var.rancher_version}"
     }
 }
