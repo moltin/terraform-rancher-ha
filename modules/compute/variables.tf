@@ -35,6 +35,11 @@ variable "ami" {
     description = "AMI ID"
 }
 
+variable "instance_count" {
+    default = 3
+    description = "The number of instances to create"
+}
+
 variable "instance_type" {
     description = "The type of instance to start"
 }

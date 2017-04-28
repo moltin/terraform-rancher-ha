@@ -44,6 +44,7 @@ Rancher HA compute module, compounded by:
 | db_user | Username for the DB user | - | yes |
 | domain | The domain of the certificate to look up | - | yes |
 | environment | The environment where we are building the resource | `production` | no |
+| instance_count | The number of instances to create | `3` | no |
 | instance_type | The type of instance to start | - | yes |
 | key_name | The name of the SSH key to use on the instance, e.g. moltin | - | yes |
 | key_path | The path of the public SSH key to use on the instance, e.g. ~/.ssh/id_rsa.pub | - | yes |

@@ -1,8 +1,8 @@
 module "instance" {
     source = "git::git@github.com:moltin/terraform-modules.git//aws/compute/ec2_instance?ref=0.1.1"
 
-    name = "${var.name}"
-    instance_count = 3
+    name           = "${var.name}"
+    instance_count = "${var.instance_count}"
 
     ami                    = "${var.ami}"
     user_data              = "${data.template_file.cloud-config.rendered}"
