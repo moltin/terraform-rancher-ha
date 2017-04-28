@@ -1,6 +1,6 @@
 # TODO
 
-- Change Route53 to point to Rancher HA ELB
+- Add resource to add/change Route53 to point to Rancher HA ELB
 - Apply [Terrafile Design Pattern](http://bensnape.com/2016/01/14/terraform-design-patterns-the-terrafile/) to pull dependencies
 - Improve AWS tag strategy https://d0.awsstatic.com/aws-answers/AWS_Tagging_Strategies.pdf
 - `data terraform_remote_state` should be more flexible to allow use different aws account, e.g. using `arn` instead of `profile`

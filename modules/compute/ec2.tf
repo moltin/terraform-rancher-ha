@@ -8,27 +8,13 @@ module "instance" {
     user_data              = "${data.template_file.cloud-config.rendered}"
     subnet_ids             = "${data.terraform_remote_state.network.private_subnet_ids}"
     instance_type          = "${var.instance_type}"
-    vpc_security_group_ids = ["${data.terraform_remote_state.database.sg_rancher_id}", "${module.sg_ssh.id}"]
+    vpc_security_group_ids = ["${data.terraform_remote_state.database.sg_rancher_id}"]
 
     key_name = "${var.key_name}"
     key_path = "${var.key_path}"
 
     tags {
         "Cluster"     = "rancher"
-        "Audience"    = "public"
-        "Environment" = "${var.environment}"
-    }
-}
-
-module "sg_ssh" {
-    source = "git::git@github.com:moltin/terraform-modules.git//aws/networking/security_group/sg_ssh?ref=0.1.1"
-
-    name     = "${var.name}"
-    vpc_id   = "${data.terraform_remote_state.network.vpc_id}"
-    vpc_cidr = "${var.vpc_cidr}"
-
-    tags {
-        "Cluster"     = "security"
         "Audience"    = "public"
         "Environment" = "${var.environment}"
     }
