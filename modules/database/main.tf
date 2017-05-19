@@ -5,21 +5,70 @@
  * - Rancher Security Group
  */
 
+variable "aws_account_id" {
+    description = "AWS account ID to prevent you from mistakenly using an incorrect one (and potentially end up destroying a live environment)"
+}
+
+// The backup retention period
+//
+// This is the minimun recommendable retention period for backups however it will
+// dependes on our needs
+variable "backup_retention_period" {
+    default = "7"
+}
+
 variable "bucket_name" {
     description = "The name of the S3 bucket"
+}
+
+variable "db_name" {
+    description = "The name for your database of up to 8 alpha-numeric characters. If you do not provide a name"
+}
+
+variable "db_pass" {
+    description = "Password for the DB user"
+}
+
+variable "db_user" {
+    description = "Username for the DB user"
+}
+
+variable "environment" {
+    default = "production"
+    description = "The environment where we are building the resource"
+}
+
+variable "final_snapshot_identifier" {
+    description = "The name of your final DB snapshot when this DB cluster is deleted. If omitted, no final snapshot will be made"
 }
 
 variable "name" {
     description = "The prefix name for all resources"
 }
 
-variable "region" {
-    description = "The region where all the resources will be created"
+// The time window on which backups will be made (HH:mm-HH:mm)
+//
+// We are choosing a 2 hours window early in the morning between 2am and 4am
+// before a maintenance window so they won't collide an affect one to another
+variable "preferred_backup_window" {
+    default = "02:00-04:00"
 }
 
-variable "environment" {
-    default = "production"
-    description = "The environment where we are building the resource"
+// The weekly time range during which system maintenance can occur, in (UTC)
+// e.g. wed:04:00-wed:04:30
+//
+// We have choosen this window as the default one because it fits our needs and
+// the most important regions won't be affected
+variable "preferred_maintenance_window" {
+    default = "wed:06:00-wed:06:30"
+}
+
+variable "skip_final_snapshot" {
+    default = false
+}
+
+variable "region" {
+    description = "The region where all the resources will be created"
 }
 
 variable "role_arn" {
@@ -30,24 +79,8 @@ variable "session_name" {
     description = "The session name to use when making the AssumeRole call"
 }
 
-variable "aws_account_id" {
-    description = "AWS account ID to prevent you from mistakenly using an incorrect one (and potentially end up destroying a live environment)"
-}
-
 variable "vpc_cidr" {
     description = "VPC CIDR block"
-}
-
-variable "db_name" {
-    description = "The name for your database of up to 8 alpha-numeric characters. If you do not provide a name"
-}
-
-variable "db_user" {
-    description = "Username for the DB user"
-}
-
-variable "db_pass" {
-    description = "Password for the DB user"
 }
 
 module "rds_cluster" {
@@ -60,6 +93,11 @@ module "rds_cluster" {
     database_name                 = "${var.db_name}"
     master_username               = "${var.db_user}"
     master_password               = "${var.db_pass}"
+    skip_final_snapshot           = "${var.skip_final_snapshot}"
+    backup_retention_period       = "${var.backup_retention_period}"
+    preferred_backup_window       = "${var.preferred_backup_window}"
+    final_snapshot_identifier     = "${var.final_snapshot_identifier}"
+    preferred_maintenance_window  = "${var.preferred_maintenance_window}"
     ingress_allow_security_groups = ["${module.sg_rancher.id}"]
 }
 
