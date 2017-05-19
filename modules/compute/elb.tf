@@ -1,5 +1,5 @@
 module "elb" {
-    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/elb_https?ref=0.1.11"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/compute/elb_https?ref=0.1.11"
 
     name                   = "${var.name}"
     subnet_ids             = "${data.terraform_remote_state.network.public_subnet_ids}"
