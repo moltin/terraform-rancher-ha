@@ -51,7 +51,7 @@ variable "db_pass" {
 }
 
 module "rds_cluster" {
-    source = "git::git@github.com:moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.2"
+    source = "git::ssh://git@github.com/moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.5"
 
     name                          = "${var.name}"
     vpc_id                        = "${data.terraform_remote_state.network.vpc_id}"
@@ -64,7 +64,7 @@ module "rds_cluster" {
 }
 
 module "sg_rancher" {
-    source = "git::git@github.com:moltin/terraform-modules.git//aws/networking/security_group/sg_rancher?ref=0.1.1"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_rancher?ref=0.1.11"
 
     name     = "${var.name}"
     vpc_id   = "${data.terraform_remote_state.network.vpc_id}"

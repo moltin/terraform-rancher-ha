@@ -1,5 +1,5 @@
 module "elb" {
-    source = "git::git@github.com:moltin/terraform-modules.git//aws/networking/elb_https?ref=0.1.1"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/elb_https?ref=0.1.11"
 
     name                   = "${var.name}"
     subnet_ids             = "${data.terraform_remote_state.network.public_subnet_ids}"
@@ -17,7 +17,7 @@ module "elb" {
 }
 
 module "sg_elb_https" {
-    source = "git::git@github.com:moltin/terraform-modules.git//aws/networking/security_group/sg_elb_https?ref=0.1.1"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_elb_https?ref=0.1.11"
 
     name   = "${var.name}"
     vpc_id = "${data.terraform_remote_state.network.vpc_id}"

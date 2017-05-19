@@ -1,5 +1,5 @@
 module "instance" {
-    source = "git::git@github.com:moltin/terraform-modules.git//aws/compute/ec2_instance?ref=0.1.1"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/compute/ec2_instance?ref=0.1.11"
 
     name           = "${var.name}"
     instance_count = "${var.instance_count}"
