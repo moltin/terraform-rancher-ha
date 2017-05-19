@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.1.6 (2017-05-19)
+
+### New
+
+* Add changelog file. [Israel Sotomayor]
+
+### Fix
+
+* Wrong path to elb_https. [Israel Sotomayor]
+
+
 ## 0.1.5 (2017-05-19)
 
 ### New
