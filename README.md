@@ -4,25 +4,22 @@ This project contain Terraform modules that will provide us with a full Rancher 
 
 This project use [Terraform Remote State](https://www.terraform.io/docs/state/remote.html) to store the states remotely on our AWS S3 account and sharing across each module those variables this way we'll have our system modularize into 3 independent components leveraging security, maintainability, composability/reuse.
 
-# Dependencies
+## Dependencies
 
 This project depends on:
 
 - [terraform-stack](https://github.com/moltin/terraform-stack)
 - [terraform-modules](https://github.com/moltin/terraform-modules)
 
-# Versioning
+## Versioning
 
 We follow [semver](http://semver.org/) to tag our repos
 
 ## Available Modules
 
-* Compute
-	* [Compute](#compute)
-* Database
-	* [Database](#database)
-* Network
-	* [Network](#network)
+* [Compute](#compute)
+* [Database](#database)
+* [Network](#network)
 
 ## Compute
 
@@ -75,15 +72,20 @@ Database module that will create:
 | Name | Description | Default | Required |
 |------|-------------|:-----:|:-----:|
 | aws_account_id | AWS account ID to prevent you from mistakenly using an incorrect one (and potentially end up destroying a live environment) | - | yes |
+| backup_retention_period | The backup retention period<br><br>This is the minimun recommendable retention period for backups however it will dependes on our needs | `7` | no |
 | bucket_name | The name of the S3 bucket | - | yes |
 | db_name | The name for your database of up to 8 alpha-numeric characters. If you do not provide a name | - | yes |
 | db_pass | Password for the DB user | - | yes |
 | db_user | Username for the DB user | - | yes |
 | environment | The environment where we are building the resource | `production` | no |
+| final_snapshot_identifier | The name of your final DB snapshot when this DB cluster is deleted. If omitted, no final snapshot will be made | - | yes |
 | name | The prefix name for all resources | - | yes |
+| preferred_backup_window | The time window on which backups will be made (HH:mm-HH:mm)<br><br>We are choosing a 2 hours window early in the morning between 2am and 4am before a maintenance window so they won't collide an affect one to another | `02:00-04:00` | no |
+| preferred_maintenance_window | The weekly time range during which system maintenance can occur, in (UTC) e.g. wed:04:00-wed:04:30<br><br>We have choosen this window as the default one because it fits our needs and the most important regions won't be affected | `wed:06:00-wed:06:30` | no |
 | region | The region where all the resources will be created | - | yes |
 | role_arn | The ARN of the role to assume | - | yes |
 | session_name | The session name to use when making the AssumeRole call | - | yes |
+| skip_final_snapshot |  | `false` | no |
 | vpc_cidr | VPC CIDR block | - | yes |
 
 ## Outputs
@@ -128,17 +130,17 @@ Network module that will create:
 | vpc_id | The ID of the VPC |
 
 
-# Authors
+## Authors
 
 * **Israel Sotomayor** - *Initial work* - [zot24](https://github.com/zot24)
 
 See also the list of [contributors](https://github.com/moltin/terraform-rancher-ha/contributors) who participated in this project.
 
-# License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/moltin/terraform-rancher-ha/blob/master/LICENSE) file for details
 
-# Resources
+## Resources
 
 - Articles
   - [The Segment AWS Stack](https://segment.com/blog/the-segment-aws-stack/)
@@ -146,9 +148,11 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
   - [How to create reusable infrastructure with Terraform modules](https://blog.gruntwork.io/how-to-create-reusable-infrastructure-with-terraform-modules-25526d65f73d)
   - [Infrastructure Packages](https://blog.gruntwork.io/gruntwork-infrastructure-packages-7434dc77d0b1)
   - [Terraform: Cloud made easy](http://blog.contino.io/terraform-cloud-made-easy-part-one)
-  - [Deploying Rancher HA in production with AWS, Terraform, and RancherOS](https://thisendout.com/2016/12/10/update-deploying-rancher-in-production-aws-terraform-rancheros/)
   - [Terraform, VPC, and why you want a tfstate file per env](https://charity.wtf/2016/03/30/terraform-vpc-and-why-you-want-a-tfstate-file-per-env/)
-
+  - Rancher HA:
+    - [Deploying Rancher HA in production with AWS, Terraform, and RancherOS](https://thisendout.com/2016/12/10/update-deploying-rancher-in-production-aws-terraform-rancheros/)
+    - [AWS and Rancher: Building a Resilient Stack](http://rancher.com/aws-rancher-building-resilient-stack)
+  
 - Non directly related but useful
   - [Practical VPC Design](https://medium.com/aws-activate-startup-blog/practical-vpc-design-8412e1a18dcc)
 
@@ -157,6 +161,9 @@ This project is licensed under the MIT License - see the [LICENSE](https://githu
   - [segmentio/stack](https://github.com/segmentio/stack)
   - [hashicorp/best-practices](https://github.com/hashicorp/best-practices)
   - [terraform-community-modules](https://github.com/terraform-community-modules)
-  - [nextrevision/terraform-rancher-ha-example](https://github.com/nextrevision/terraform-rancher-ha-example)
   - [contino/terraform-learn](https://github.com/contino/terraform-learn)
   - [paybyphone/terraform_aws_private_subnet](https://github.com/paybyphone/terraform_aws_private_subnet)
+  - Rancher HA:
+    - [cloudnautique/terraform-rancher](https://github.com/cloudnautique/terraform-rancher)
+    - [nextrevision/terraform-rancher-ha-example](https://github.com/nextrevision/terraform-rancher-ha-example)
+    - [codesheppard/terraform-rancher-starter-template](https://github.com/codesheppard/terraform-rancher-starter-template)
