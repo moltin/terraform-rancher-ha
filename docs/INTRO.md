@@ -4,6 +4,17 @@ This project contain Terraform modules that will provide us with a full Rancher 
 
 This project use [Terraform Remote State](https://www.terraform.io/docs/state/remote.html) to store the states remotely on our AWS S3 account and sharing across each module those variables this way we'll have our system modularize into 3 independent components leveraging security, maintainability, composability/reuse.
 
+## Index
+
+- [Dependencies](#dependencies)
+- [Versioning](#versioning)
+- [Available Modules](#available-modules)
+- [Changelog](CHANGELOG.md)
+- [Upgrade Rancher Server version](#upgrade-rancher-server-version)
+- [Authors](#authors)
+- [License](#license)
+- [Resources](#resources)
+
 ## Dependencies
 
 This project depends on:

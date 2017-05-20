@@ -21,17 +21,19 @@ for path in $modules; do
     link=${name// /-}                             # convert module title to a compatible github markdown anchor (white spaces to `-` and lowercases)
     link=$(echo $link | sed -e 's/\(.*\)/\L\1/g') # lowercase all words on the link
 
-    printf "* [$name](#$link)\n" >> README.md          # print each available module index entry
+    printf "* [$name](#$link)\n" >> README.md            # print each available module index entry
     docs+="## $name\n\n"$(terraform-docs md $path)"\n\n" # store in buffer each module documentation
 done
 printf "\n" >> README.md     # separate available modules list from begining of modules documentation
 echo -e "$docs" >> README.md # dump modules documentation
 
+printf "###UPGRADE###\n\n" >> README.md   # resources section tag that will be remplace with the content from the upgrade doc file
 printf "###AUTHORS###\n\n" >> README.md # resources section tag that will be remplace with the content from the authors doc file
 printf "###LICENSE###\n\n" >> README.md # resources section tag that will be remplace with the content from the license doc file
 printf "###RESOURCES###\n" >> README.md # resources section tag that will be remplace with the content from the resources doc file
 
 awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###INTRO###/{sub(/###INTRO###/, s)} 1' docs/INTRO.md README.md > README.tmp && mv README.tmp README.md
-awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###RESOURCES###/{sub(/###RESOURCES###/, s)} 1' docs/RESOURCES.md README.md > README.tmp && mv README.tmp README.md
+awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###UPGRADE###/{sub(/###UPGRADE###/, s)} 1' docs/UPGRADE.md README.md > README.tmp && mv README.tmp README.md
 awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###AUTHORS###/{sub(/###AUTHORS###/, s)} 1' docs/AUTHORS.md README.md > README.tmp && mv README.tmp README.md
 awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###LICENSE###/{sub(/###LICENSE###/, s)} 1' docs/LICENSE.md README.md > README.tmp && mv README.tmp README.md
+awk 'FNR==NR{s=(!s)?$0:s RS $0;next} /###RESOURCES###/{sub(/###RESOURCES###/, s)} 1' docs/RESOURCES.md README.md > README.tmp && mv README.tmp README.md
