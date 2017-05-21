@@ -1,5 +1,5 @@
 module "elb" {
-    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/compute/elb_https?ref=0.1.11"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/compute/elb_https?ref=0.1.13"
 
     name                   = "${var.name}"
     subnet_ids             = "${data.terraform_remote_state.network.public_subnet_ids}"
@@ -17,7 +17,7 @@ module "elb" {
 }
 
 module "sg_elb_https" {
-    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_elb_https?ref=0.1.11"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_elb_https?ref=0.1.13"
 
     name   = "${var.name}"
     vpc_id = "${data.terraform_remote_state.network.vpc_id}"
@@ -27,11 +27,6 @@ module "sg_elb_https" {
         "Audience"    = "public"
         "Environment" = "${var.environment}"
     }
-}
-
-resource "aws_proxy_protocol_policy" "global" {
-    load_balancer  = "${module.elb.name}"
-    instance_ports = ["443", "8080"]
 }
 
 data "aws_acm_certificate" "rancher" {
