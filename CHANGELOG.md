@@ -1,6 +1,15 @@
 # Changelog
 
 
+## 0.1.7 (2017-05-21)
+
+### Changes
+
+* Bump modules version to 0.1.13 and remove elb proxy protocol. [Israel Sotomayor]
+
+  ELB proxy protocol resource have been moved to ELB Terraform module
+
+
 ## 0.1.6 (2017-05-19)
 
 ### New
