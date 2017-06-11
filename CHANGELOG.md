@@ -1,6 +1,17 @@
 # Changelog
 
 
+## 0.1.8 (2017-06-11)
+
+### New
+
+* Bastion + SG membership as source SG for more control. [Israel Sotomayor]
+
+### Fix
+
+* Editorconfig file Makefile rule. [Israel Sotomayor]
+
+
 ## 0.1.7 (2017-05-21)
 
 ### Changes

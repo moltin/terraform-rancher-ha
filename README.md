@@ -37,6 +37,7 @@ We follow [semver](http://semver.org/) to tag our repos
 Rancher HA compute module, compounded by:
 
 - ELB
+- Bastion
 - EC2 instances
 
 
@@ -68,6 +69,9 @@ Rancher HA compute module, compounded by:
 
 | Name | Description |
 |------|-------------|
+| bastion_instance_private_ip | Private IP address to associate with the bastion instance in a VPC |
+| bastion_instance_public_ip | The public IP address assigned to the bastion instance |
+| bastion_user | User to access bastion |
 | elb_dns_name | The DNS name of the ELB |
 
 ## Database
@@ -75,7 +79,7 @@ Rancher HA compute module, compounded by:
 Database module that will create:
 
 - RDS Cluster
-- Rancher Security Group
+- Rancher Membership Security Group
 
 
 ## Inputs
@@ -105,15 +109,15 @@ Database module that will create:
 |------|-------------|
 | rds_cluster_endpoint | The DNS address of the RDS instance |
 | rds_cluster_port | The port on which the DB accepts connections |
-| sg_rancher_id | The ID of the Rancher Security Group |
+| sg_membership_rancher_id | The ID of the Rancher Membership Security Group |
 
 ## Network
 
 Network module that will create:
 
 - VPC
-- Private Subnet
 - Public Subnet
+- Private Subnet
 - Internet Gateway
 
 
