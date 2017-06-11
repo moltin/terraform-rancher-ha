@@ -2,7 +2,7 @@
  * Database module that will create:
  *
  * - RDS Cluster
- * - Rancher Security Group
+ * - Rancher Membership Security Group
  */
 
 variable "aws_account_id" {
@@ -84,7 +84,7 @@ variable "vpc_cidr" {
 }
 
 module "rds_cluster" {
-    source = "git::ssh://git@github.com/moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.5"
+    source = "git::ssh://git@github.com/moltin/terraform-stack.git//aws/rds_cluster?ref=0.1.6"
 
     name                          = "${var.name}"
     vpc_id                        = "${data.terraform_remote_state.network.vpc_id}"
@@ -98,25 +98,25 @@ module "rds_cluster" {
     preferred_backup_window       = "${var.preferred_backup_window}"
     final_snapshot_identifier     = "${var.final_snapshot_identifier}"
     preferred_maintenance_window  = "${var.preferred_maintenance_window}"
-    ingress_allow_security_groups = ["${module.sg_rancher.id}"]
+    ingress_allow_security_groups = ["${module.sg_membership_rancher.id}"]
 }
 
-module "sg_rancher" {
-    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_rancher?ref=0.1.13"
+module "sg_membership_rancher" {
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_custom_group?ref=0.2.0"
 
-    name     = "${var.name}"
-    vpc_id   = "${data.terraform_remote_state.network.vpc_id}"
-    vpc_cidr = "${var.vpc_cidr}"
+    name        = "${var.name}-sg-membership-rancher"
+    vpc_id      = "${data.terraform_remote_state.network.vpc_id}"
+    description = "Rancher membership security group"
 
     tags {
         "Cluster"     = "security"
-        "Audience"    = "public"
+        "Audience"    = "private"
         "Environment" = "${var.environment}"
     }
 }
 
-// The ID of the Rancher Security Group
-output "sg_rancher_id" { value = "${module.sg_rancher.id}" }
+// The ID of the Rancher Membership Security Group
+output "sg_membership_rancher_id" { value = "${module.sg_membership_rancher.id}" }
 
 // The port on which the DB accepts connections
 output "rds_cluster_port" { value = "${module.rds_cluster.port}" }
