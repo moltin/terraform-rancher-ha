@@ -73,6 +73,7 @@ Rancher HA compute module, compounded by:
 | bastion_instance_public_ip | The public IP address assigned to the bastion instance |
 | bastion_user | User to access bastion |
 | elb_dns_name | The DNS name of the ELB |
+| elb_zone_id | The canonical hosted zone ID of the ELB (to be used in a Route 53 Alias record) |
 
 ## Database
 

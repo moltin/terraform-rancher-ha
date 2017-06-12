@@ -1,6 +1,13 @@
 # Changelog
 
 
+## 0.1.9 (2017-06-12)
+
+### Other
+
+* Bump version to 0.2.1 and output elb zone id. [Israel Sotomayor]
+
+
 ## 0.1.8 (2017-06-11)
 
 ### New
