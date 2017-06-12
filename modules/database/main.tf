@@ -102,7 +102,7 @@ module "rds_cluster" {
 }
 
 module "sg_membership_rancher" {
-    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_custom_group?ref=0.2.0"
+    source = "git::ssh://git@github.com/moltin/terraform-modules.git//aws/networking/security_group/sg_custom_group?ref=0.2.1"
 
     name        = "${var.name}-sg-membership-rancher"
     vpc_id      = "${data.terraform_remote_state.network.vpc_id}"
